@@ -14,8 +14,9 @@ class ParcelMachineController extends Controller
      */
     public function index()
     {
+        $parcelMachinesTotal = ParcelMachine::all();
         $parcelMachines = ParcelMachine::paginate(10);
-        return view('parcel-machines.index', compact('parcelMachines'));
+        return view('parcel-machines.index', compact('parcelMachines', 'parcelMachinesTotal'));
 
     }
 
