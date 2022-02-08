@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .category-labels {
+      @apply flex justify-center items-center w-80 outline-none  text-sm rounded-t-md text-gray-100 shadow-[20px_1px_55px_-5px_rgba(0,0,0,0.75)]  cursor-pointer
+
+    }
+   
+    /* ... */
+  }
