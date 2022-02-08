@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use App\Models\ParcelMachine;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Http;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +17,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $parcelMachines = Http::get('https://www.omniva.lt/locations.json')->json();   
+            ParcelMachine::whereNotNull('id')->delete();   
+            foreach ($parcelMachines as $machine) {              
+                $parcelMachine = new ParcelMachine();
+                $parcelMachine->fill($machine);
+                $parcelMachine->save();                    
+            }
+        })->dailyAt('00:00')->timezone('Europe/Vilnius');
     }
 
     /**
