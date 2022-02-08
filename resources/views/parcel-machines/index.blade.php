@@ -35,6 +35,9 @@
             </div>
         </form>
     </div>
+    <div class="h-10 w-full flex items-center">
+        <div id="total" class="text-md text-gray-400 ml-8">Total: {{ count($parcelMachinesTotal) }}</div>
+    </div>
     {{-- Parcel Machines Container --}}
     @foreach ($parcelMachines as $parcelMachine)
         {{-- Parcel Machine Card --}}

@@ -469,6 +469,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ml-10 {
   margin-left: 2.5rem;
 }
+.ml-8 {
+  margin-left: 2rem;
+}
 .flex {
   display: flex;
 }
@@ -489,6 +492,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-6 {
   height: 1.5rem;
+}
+.h-10 {
+  height: 2.5rem;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -610,6 +616,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-\[\#e4022c\] {
   --tw-text-opacity: 1;
   color: rgb(228 2 44 / var(--tw-text-opacity));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 .opacity-30 {
   opacity: 0.3;
