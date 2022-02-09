@@ -142,7 +142,7 @@
                             $('#total').html('Total: 0');
                         }
                     });
-                }, 2000));
+                }, 2000));  // delay for 2 seconds to reduce requests to server
             });
         });
     </script>

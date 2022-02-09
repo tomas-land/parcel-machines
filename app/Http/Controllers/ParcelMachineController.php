@@ -30,6 +30,8 @@ class ParcelMachineController extends Controller
     public function show(ParcelMachine $parcelmachine)
     {
 
+        $parcelMachine = ParcelMachine::find($parcelmachine)->firstOrFail();
+        return view('parcel-machines.show', compact('parcelMachine'));
     }
 
     public function search(Request $request)
