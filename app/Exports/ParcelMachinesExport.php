@@ -24,7 +24,7 @@ class ParcelMachinesExport implements FromView, ShouldAutoSize
     {
         if ($this->category == 'zip') {
             return view('parcel-machines.parcel-machines-export', [
-                'parcelMachines' => ParcelMachine::where('zip', 'LIKE', '%' . $this->query . '%')->get(),
+                'parcelMachines' => ParcelMachine::where('zip', 'LIKE', $this->query . '%')->get(),
             ]);
         } else if($this->category == 'name') {
             return view('parcel-machines.parcel-machines-export', [

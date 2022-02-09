@@ -1,0 +1,33 @@
+<table>
+<thead>
+    <tr>
+        <th>ZIP</th>
+        <th>NAME</th>
+        <th>ADRESS</th>
+        <th>ADRESS_2</th>
+        <th>ADRESS_3</th>
+        <th>ADRESS_4</th>
+        <th>ADRESS_5</th>
+        <th>ADRESS_6</th>
+        <th>ADRESS_7</th>
+        <th>ADRESS_8</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach ($parcelMachines as $parcelMachine)
+        <tr>
+            <td>{{$parcelMachine->ZIP}}</td>
+            <td>{{$parcelMachine->NAME}}</td>
+            <td>{{$parcelMachine->A0_NAME}}</td>
+            <td>{{$parcelMachine->A1_NAME}}</td>
+            <td>{{$parcelMachine->A2_NAME}}</td>
+            <td>{{$parcelMachine->A3_NAME}}</td>
+            <td>{{$parcelMachine->A4_NAME}}</td>
+            <td>{{$parcelMachine->A5_NAME}}</td>
+            <td>{{$parcelMachine->A6_NAME}}</td>
+            <td>{{$parcelMachine->A7_NAME}}</td>
+            <td>{{$parcelMachine->A8_NAME}}</td>
+        </tr>
+    @endforeach
+</tbody>
+</table>

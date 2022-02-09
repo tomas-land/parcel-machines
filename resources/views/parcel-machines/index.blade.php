@@ -114,7 +114,6 @@
                                 $('#ajax-content').html('Not found');
                                 $('#total').html('');
                             } else {
-                                console.log('object');
                                 let total = $(res).toArray().length;
                                 var content = '';
                                 $('#ajax-content').html('');
