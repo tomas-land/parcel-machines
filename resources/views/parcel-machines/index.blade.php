@@ -2,7 +2,7 @@
 @section('content')
     {{-- Top bar --}}
     <div class="h-32 flex flex-col justify-center bg-[#1a1a1acc] ">
-        <form action="" method="post" class="flex items-end pl-8">
+        <form action="{{ route('parcelmachines.export') }}" method="post" class="flex items-end pl-8">
             @csrf
             <div class="flex flex-col max-w-xl shadow-xl">
                 <div class="flex h-8 w-3/4">
@@ -32,6 +32,10 @@
                     <input type="text" class="px-4 py-1 outline-none w-full border-4 rounded-md border-white "
                         placeholder="Search..." id="search-parcelmachine" name="searchQuery" autocomplete="off">
                 </div>
+            </div>
+            <div>
+                <button id="export-excel-btn" type="submit"
+                    class="ml-12 bg-[#F04E23] text-sm text-gray-100 py-[14px] px-5 rounded-md shadow-xl">EXPORT TO EXCEL</button>
             </div>
         </form>
     </div>
