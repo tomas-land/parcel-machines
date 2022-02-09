@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ParcelMachineNotFoundException;
 use App\Exports\ParcelMachinesAllExport;
 use App\Exports\ParcelMachinesExport;
 use App\Models\ParcelMachine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class ParcelMachineController extends Controller
 {
@@ -18,8 +20,13 @@ class ParcelMachineController extends Controller
      */
     public function index()
     {
-        $parcelMachinesTotal = ParcelMachine::all();
-        $parcelMachines = ParcelMachine::paginate(10);
+
+        try {
+            $parcelMachinesTotal = ParcelMachine::all();
+            $parcelMachines = ParcelMachine::paginate(10);
+        } catch (\Exception $e) {
+            throw new ParcelMachineNotFoundException();
+        }
         return view('parcel-machines.index', compact('parcelMachines', 'parcelMachinesTotal'));
     }
 
