@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
                 $parcelMachine->fill($machine);
                 $parcelMachine->save();                    
             }
-        })->dailyAt('00:00')->timezone('Europe/Vilnius');
+        })->dailyAt('17:48')->timezone('Europe/Vilnius');
     }
 
     /**
