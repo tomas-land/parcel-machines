@@ -39,6 +39,7 @@
         <div id="total" class="text-md text-gray-400 ml-8">Total: {{ count($parcelMachinesTotal) }}</div>
     </div>
     {{-- Parcel Machines Container --}}
+    <div class="flex flex-col space-y-4 pl-8" id="ajax-content">
     @foreach ($parcelMachines as $parcelMachine)
         {{-- Parcel Machine Card --}}
         <a href="{{ route('parcelmachines.show', $parcelMachine) }}" class="w-3/4">
@@ -66,4 +67,83 @@
     </div>
 @endsection
 @push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('input[name="category"]:checked').parent().addClass('bg-[#F04E23]');
+            $('input[name="category"]').on('click', function() {
+                $(this).parent().addClass('bg-[#F04E23]');
+                $(this).parent().siblings().removeClass('bg-[#F04E23]');
+            });
+            
+            $('#search-parcelmachine').on('focus', function() {
+                var category = $('input[name="category"]:checked').val();
+                // Debounce function
+                var debounce = function(func, wait, immediate) {
+                    var timeout;
+                    return function() {
+                        var context = this,
+                            args = arguments;
+                        var later = function() {
+                            timeout = null;
+                            if (!immediate) func.apply(context, args);
+                        };
+                        var callNow = immediate && !timeout;
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                        if (callNow) func.apply(context, args);
+                    };
+                };
+
+                $('#search-parcelmachine').on('keyup', debounce(function() {
+                    var searchQuery = $(this).val();
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route('parcelmachines.search') }}',
+                        dataType: 'json',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            category: category,
+                            searchQuery: searchQuery
+                        },
+                        success: function(res) {
+                            if (res.length == 0) {
+                                $('#ajax-content').html('Not found');
+                                $('#total').html('');
+                            } else {
+                                console.log('object');
+                                let total = $(res).toArray().length;
+                                var content = '';
+                                $('#ajax-content').html('');
+                                $.each(res, function(index, value) {
+                                    content =
+                                        '<a href="'+ route('parcelmachines.show', value.id) + '" class="w-3/4">' +
+                                            '<div class="flex rounded overflow-hidden shadow-lg items-center bg-gray-100 hover:bg-[#f1f1f1]">' +
+                                                '<div class="w-20 ml-4 opacity-30"><img src="{{ asset('img/locker.png') }}" alt="locker"></div>' +
+                                                '<div class="ml-6">' +
+                                                    '<div class="flex">' +
+                                                        '<div class="text text-gray-600"><span style="color:#e4022c">ZIP:</span> ' + value.ZIP + '</div>' +
+                                                        '<div class="text text-gray-600 ml-10"><span style="color:#e4022c">NAME:</span> ' + value.NAME + '</div>' +
+                                                    '</div>' +
+                                                ' <div class="flex">' +                                                      
+                                                    '<div class="text text-gray-600"><span style="color:#e4022c">ADRESS:</span> ' + (([value.A0_NAME,value.A1_NAME,value.A2_NAME,value.A3_NAME,value.A4_NAME,value.A5_NAME,value.A6_NAME,value.A7_NAME,value.A8_NAME].filter(Boolean)).join(" - ")) + '</div>' +
+                                                '</div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</a>';
+                                        $('#ajax-content').append(content);
+                                });
+                                $('#total').html('Total: ');
+                                $('#total').append(total);
+                            }
+                        },
+                        error: function(res) {
+                            $('#ajax-content').text(res.responseJSON.errors
+                                .searchQuery);
+                            $('#total').html('Total: 0');
+                        }
+                    });
+                }, 2000));
+            });
+        });
+    </script>
 @endpush

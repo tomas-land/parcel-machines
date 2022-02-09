@@ -13,5 +13,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/parcelmachines/search',[ParcelMachineController::class,'search'])->name('parcelmachines.search');
 
 Route::resource('/parcelmachines', ParcelMachineController::class );
