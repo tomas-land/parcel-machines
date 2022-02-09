@@ -79,7 +79,7 @@ Project is created with :
 
 ## Usage
 
-To run scheduled task on loacal server : 
+To run scheduled task on local server : 
 ```
 php artisan schedule:work
 ```
