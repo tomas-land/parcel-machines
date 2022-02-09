@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ParcelMachinesAllExport;
+use App\Exports\ParcelMachinesExport;
 use App\Models\ParcelMachine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ParcelMachineController extends Controller
 {
@@ -18,7 +21,6 @@ class ParcelMachineController extends Controller
         $parcelMachinesTotal = ParcelMachine::all();
         $parcelMachines = ParcelMachine::paginate(10);
         return view('parcel-machines.index', compact('parcelMachines', 'parcelMachinesTotal'));
-
     }
 
     /**
@@ -29,7 +31,6 @@ class ParcelMachineController extends Controller
      */
     public function show(ParcelMachine $parcelmachine)
     {
-
         $parcelMachine = ParcelMachine::find($parcelmachine)->firstOrFail();
         return view('parcel-machines.show', compact('parcelMachine'));
     }
@@ -58,7 +59,17 @@ class ParcelMachineController extends Controller
                     parcel_machines.a8_name)"), 'LIKE', '%' . $request->get('searchQuery') . '%')->get();
             return response()->json($parcelMachines);
         }
+    }
 
+    public function export(Request $request)
+    {
+        if (request()->has('searchQuery') && !empty(request()->get('searchQuery'))) {
+            $category = $request->get('category');
+            $query = $request->get('searchQuery');
+            return Excel::download(new ParcelMachinesExport($query, $category), 'parcel-machines.xlsx');
+        } else {
+            return Excel::download(new ParcelMachinesAllExport, 'parcel-machines.xlsx');
+        }
     }
 
 }
