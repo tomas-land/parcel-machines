@@ -2,12 +2,11 @@
 
 namespace App\Exports;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\ParcelMachine;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-
 
 class ParcelMachinesExport implements FromView, ShouldAutoSize
 {
@@ -26,11 +25,11 @@ class ParcelMachinesExport implements FromView, ShouldAutoSize
             return view('parcel-machines.parcel-machines-export', [
                 'parcelMachines' => ParcelMachine::where('zip', 'LIKE', $this->query . '%')->get(),
             ]);
-        } else if($this->category == 'name') {
+        } else if ($this->category == 'name') {
             return view('parcel-machines.parcel-machines-export', [
                 'parcelMachines' => ParcelMachine::where('name', 'LIKE', '%' . $this->query . '%')->get(),
             ]);
-        } else if($this->category == 'address') {
+        } else if ($this->category == 'address') {
             return view('parcel-machines.parcel-machines-export', [
                 'parcelMachines' => ParcelMachine::where(DB::raw("CONCAT(
                     parcel_machines.a0_name,' - ',parcel_machines.a1_name,' - ',
@@ -39,7 +38,7 @@ class ParcelMachinesExport implements FromView, ShouldAutoSize
                     parcel_machines.a6_name,' - ',parcel_machines.a7_name,' - ',
                     parcel_machines.a8_name)"), 'LIKE', '%' . $this->query . '%')->get(),
             ]);
-        } 
+        }
     }
 }
 

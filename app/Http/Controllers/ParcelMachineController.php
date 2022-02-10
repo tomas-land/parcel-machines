@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-
 class ParcelMachineController extends Controller
 {
     /**
@@ -28,6 +27,7 @@ class ParcelMachineController extends Controller
             throw new ParcelMachineNotFoundException();
         }
         return view('parcel-machines.index', compact('parcelMachines', 'parcelMachinesTotal'));
+
     }
 
     /**
@@ -54,12 +54,12 @@ class ParcelMachineController extends Controller
                 ]);
             $parcelMachines = ParcelMachine::where('zip', 'LIKE', $request->get('searchQuery') . '%')->orderBY('zip', 'ASC')->get(); // compares strings to match the given string sequentualy
             return response()->json($parcelMachines);
-        } 
+        }
         if ($request->get('category') == 'name') {
             $parcelMachines = ParcelMachine::where('name', 'LIKE', '%' . $request->get('searchQuery') . '%')->get(); // returns name if search query exist anywhere in the name
             return response()->json($parcelMachines);
-        } 
-         if ($request->get('category') == 'address') {
+        }
+        if ($request->get('category') == 'address') {
             $parcelMachines = ParcelMachine::where(DB::raw("CONCAT(
                     parcel_machines.a0_name,' - ',parcel_machines.a1_name,' - ',
                     parcel_machines.a2_name,' - ',parcel_machines.a3_name,' - ',

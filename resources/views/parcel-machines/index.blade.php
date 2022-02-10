@@ -43,6 +43,47 @@
     <div class="h-10 w-full flex items-center">
         <div id="total" class="text-md text-gray-400 ml-8">Total: {{ count($parcelMachinesTotal) }}</div>
     </div>
+    @if (session()->has('success'))
+    <strong>{{ session('success') }}</strong>
+    @endif
+    {{-- @if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+    
+</div>
+@endif
+  
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+    <strong>{{ $message }}</strong>
+</div>
+@endif
+   
+@if ($message = Session::get('warning'))
+<div class="alert alert-warning alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+    <strong>{{ $message }}</strong>
+</div>
+@endif
+   
+@if ($message = Session::get('info'))
+<div class="alert alert-info alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+    <strong>{{ $message }}</strong>
+</div>
+@endif
+  
+@if ($errors->any())
+<div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+    Please check the form below for errors
+</div>
+@endif --}}
+    {{-- @if (session('success'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif --}}
+
     {{-- Parcel Machines Container --}}
     <div class="flex flex-col space-y-4 pl-8" id="ajax-content">
         @foreach ($parcelMachines as $parcelMachine)
@@ -120,21 +161,21 @@
                             $('#ajax-content').html('');
                             $.each(res, function(index, value) {
                                 content =
-                                    '<a href="'+ route('parcelmachines.show', value.id) + '" class="w-3/4">' +
-                                        '<div class="flex rounded overflow-hidden shadow-lg items-center bg-gray-100 hover:bg-[#f1f1f1]">' +
-                                            '<div class="w-20 ml-4 opacity-30"><img src="{{ asset('img/locker.png') }}" alt="locker"></div>' +
-                                            '<div class="ml-6">' +
-                                                '<div class="flex">' +
-                                                    '<div class="text text-gray-600"><span style="color:#e4022c">ZIP:</span> ' + value.ZIP + '</div>' +
-                                                    '<div class="text text-gray-600 ml-10"><span style="color:#e4022c">NAME:</span> ' + value.NAME + '</div>' +
+                                        '<a href="'+ route('parcelmachines.show', value.id) + '" class="w-3/4">' +
+                                            '<div class="flex rounded overflow-hidden shadow-lg items-center bg-gray-100 hover:bg-[#f1f1f1]">' +
+                                                '<div class="w-20 ml-4 opacity-30"><img src="{{ asset('img/locker.png') }}" alt="locker"></div>' +
+                                                '<div class="ml-6">' +
+                                                    '<div class="flex">' +
+                                                        '<div class="text text-gray-600"><span style="color:#e4022c">ZIP:</span> ' + value.ZIP + '</div>' +
+                                                        '<div class="text text-gray-600 ml-10"><span style="color:#e4022c">NAME:</span> ' + value.NAME + '</div>' +
+                                                    '</div>' +
+                                                ' <div class="flex">' +                                                      
+                                                    '<div class="text text-gray-600"><span style="color:#e4022c">ADRESS:</span> ' + (([value.A0_NAME,value.A1_NAME,value.A2_NAME,value.A3_NAME,value.A4_NAME,value.A5_NAME,value.A6_NAME,value.A7_NAME,value.A8_NAME].filter(Boolean)).join(" - ")) + '</div>' +
                                                 '</div>' +
-                                            ' <div class="flex">' +                                                      
-                                                '<div class="text text-gray-600"><span style="color:#e4022c">ADRESS:</span> ' + (([value.A0_NAME,value.A1_NAME,value.A2_NAME,value.A3_NAME,value.A4_NAME,value.A5_NAME,value.A6_NAME,value.A7_NAME,value.A8_NAME].filter(Boolean)).join(" - ")) + '</div>' +
+                                                '</div>' +
                                             '</div>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</a>';
-                                $('#ajax-content').append(content);
+                                        '</a>';
+                                    $('#ajax-content').append(content);
                             });
                             $('#total').html('Total: ');
                             $('#total').append(total);
